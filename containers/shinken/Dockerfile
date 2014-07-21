@@ -1,6 +1,7 @@
 FROM ubuntu:trusty
 
 MAINTAINER Matthieu Caneill <matthieu.caneill@savoirfairelinux.com>
+CONTRIBUTOR Philippe Pepos Petitclerc <philippe.pepos-petitclerc@savoirfairelinux.com>
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -48,43 +49,16 @@ RUN apt-get install -y plugin-check-amt-montreal plugin-check-bixi-montreal plug
 
 RUN apt-get install -y openssh-server
 
-### Apache
-
-RUN apt-get install -y apache2 libapache2-mod-wsgi
-
 ### Supervisor
 
 RUN apt-get -y install supervisor
-
-### Pynag/Adagios
-
-RUN apt-get install -y python-simplejson coffeescript gettext make
-# We need an old version of Django for Adagios
-RUN pip install django\<1.5 python-geoip python-geoip-geolite2
-RUN ln -s /usr/bin/django-admin /usr/bin/django-admin.py
-
-RUN cd /var && git clone https://github.com/matthieucan/adagios.git
-RUN cd /var/adagios && git checkout feature-view-engine-rebased && make trad && python setup.py install
-RUN pip install git+git://github.com/pynag/pynag.git
-
-### InfluxDB
-
-RUN wget http://s3.amazonaws.com/influxdb/influxdb_latest_amd64.deb
-RUN dpkg -i influxdb_latest_amd64.deb
-RUN rm influxdb_latest_amd64.deb
-
-### Grafana
-
-RUN cd /var && wget https://github.com/grafana/grafana/archive/v1.6.1.tar.gz
-RUN cd /var && tar xzvf v1.6.1.tar.gz && rm v1.6.1.tar.gz
-
 
 ### Configuration
 
 ## Docker
 
 # makes `df` work
-#RUN ln -s /proc/mounts /etc/mtab
+# RUN ln -s /proc/mounts /etc/mtab
 
 # run permissions for user `shinken`
 RUN chmod u+s /usr/lib/nagios/plugins/check_icmp
@@ -93,10 +67,6 @@ RUN chmod u+s /bin/ping6
 
 ## Shinken, Apache, Adagios
 
-ADD templates/html /usr/local/lib/python2.7/dist-packages/adagios/status/templates/custom_views/templates
-ADD templates/media /usr/local/lib/python2.7/dist-packages/adagios/media
-
-RUN chown -R shinken: /etc/adagios
 RUN chown -R shinken: /etc/shinken
 
 RUN mv /etc/shinken/logstore_sqlite.cfg/logstore_sqlite.cfg /etc/shinken/modules/
@@ -114,8 +84,6 @@ RUN cd /usr/share/pyshared/shinken/modules/livestatus && git apply /mod-livestat
 
 ADD etc /etc
 
-EXPOSE 80
-EXPOSE 8083
 EXPOSE 22
 
 CMD ["/usr/bin/supervisord"]

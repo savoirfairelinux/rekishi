@@ -1,8 +1,6 @@
-init:
-	cd containers && git clone https://github.com/matthieucan/quebec-monitoring.git
-	mv containers/quebec-monitoring/* containers/shinken/
-
 build-shinken:
+	cp containers/shinken/scripts/tokens.py.copyme containers/shinken/scripts/tokens.py
+	cd containers/shinken && make conf
 	docker build -t shinken containers/shinken
 
 build-influxdb:
