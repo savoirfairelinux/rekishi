@@ -11,7 +11,7 @@ RUN apt-get update
 
 ### Utils
 
-RUN apt-get install -y git python-pip emacs curl
+RUN apt-get install -y git python-pip emacs curl vim
 
 ### Other .deb sources
 
@@ -65,7 +65,7 @@ RUN chmod u+s /usr/lib/nagios/plugins/check_icmp
 RUN chmod u+s /bin/ping
 RUN chmod u+s /bin/ping6
 
-## Shinken, Apache, Adagios
+## Shinken
 
 RUN chown -R shinken: /etc/shinken
 
@@ -76,7 +76,7 @@ RUN sed -i 's/Simple-log/simple-log/g' /etc/shinken/brokers/broker.cfg
 RUN sed -i 's/NrpeBooster/booster-nrpe/g' /etc/shinken/pollers/poller.cfg
 
 # Allow ssh connection from host
-# ADD id_rsa.pub /root/home/.ssh/authorized_keys
+ADD id_rsa.pub /root/home/.ssh/authorized_keys
 
 # temporary fix while we wait for https://github.com/shinken-monitoring/mod-livestatus/pull/26
 ADD mod-livestatus-labels.patch /mod-livestatus-labels.patch

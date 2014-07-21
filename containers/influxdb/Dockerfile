@@ -10,6 +10,10 @@ RUN dpkg -i influxdb_latest_amd64.deb
 # Copy configuration file
 ADD config.toml /config/config.toml
 
+# Supervisor
+
+RUN apt-get -y install supervisor
+
 # Remove file handle limits
 RUN echo "# Removing file handle limits for influxdb" >> /etc/security/limits.conf
 RUN echo "influxdb soft nofile 4096" >> /etc/security/limits.conf
@@ -30,7 +34,4 @@ EXPOSE 8090
 # Protobuf port (for clustering, don't expose publicly!)
 EXPOSE 8099
 
-# CMD ["-config=/config/config.toml"]
-# ENTRYPOINT ["/usr/bin/influxdb"]
-
-CMD ["service influxdb start"]
+CMD ["/usr/bin/supervisord"]
