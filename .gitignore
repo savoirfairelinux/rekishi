@@ -52,3 +52,19 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 
+# SSH keys
+*.pub
+
+# Vim temp files
+*.swp
+
+# Other git repos
+containers/quebec-monitoring
+containers/shinken/Dockerfile
+containers/shinken/etc
+containers/shinken/id_rsa.pub
+containers/shinken/Makefile
+containers/shinken/mod-livestatus-labels.patch
+containers/shinken/README.md
+containers/shinken/scripts
+containers/shinken/templates
