@@ -60,3 +60,4 @@ docs/_build/
 
 # Other git repos
 containers/shinken/id_rsa.pub
+containers/data

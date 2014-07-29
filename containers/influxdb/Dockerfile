@@ -36,4 +36,3 @@ EXPOSE 8090
 EXPOSE 8099
 
 CMD ["/usr/bin/supervisord"]
-# CMD ["/usr/bin/influxdb", "-config=/usr/local/etc/influxdb/config.toml"]

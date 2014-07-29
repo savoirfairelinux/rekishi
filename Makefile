@@ -1,20 +1,27 @@
+all: clean build-shinken build-influxdb run-influxdb run-shinken 
+
+build-all: build-shinken build-influxdb
+
+run-all: run-shinken run-influxdb
+
+clean:
+	docker stop shinken
+	docker stop db
+	docker rm shinken
+	docker rm db
+
 build-shinken:
 	pip install beautifulsoup4
 	pip install requests
 	cp containers/shinken/scripts/tokens.py.copyme containers/shinken/scripts/tokens.py
 	cd containers/shinken && make conf
-	docker.io build  -t quebecmon containers/shinken
+	docker build -t quebecmon containers/shinken
 
 build-influxdb:
-	docker.io build -t influxdb containers/influxdb
-	# docker.io build --no-cache=true -t influxdb containers/influxdb
+	docker build -t influxdb containers/influxdb
 
 run-shinken:
-	# docker.io rm shinken
-	docker.io run -i -t --name shinken --link db:db quebecmon bash
+	docker run -d -t --name shinken --link db:db quebecmon
 	
 run-influxdb:
-	# docker.io run -i -t -P influxdb
-	docker.io rm db
-	docker.io run -d -t -p 8083:8083 -p 8086:8086 --name db influxdb
-	# docker.io run -p 8083:8083 -p 8084:8084 -p 8086:8086 -i -t influxdb /bin/bash
+	docker run -d -v ${PWD}/containers/data:/data/db -t -p 8083:8083 -p 8086:8086 --name db influxdb
