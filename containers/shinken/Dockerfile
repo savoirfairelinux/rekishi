@@ -1,7 +1,7 @@
 FROM ubuntu:trusty
 
 MAINTAINER Matthieu Caneill <matthieu.caneill@savoirfairelinux.com>
-CONTRIBUTOR Philippe Pepos Petitclerc <philippe.pepos-petitclerc@savoirfairelinux.com>
+MAINTAINER Philippe Pepos Petitclerc <philippe.pepos-petitclerc@savoirfairelinux.com>
 
 ENV DEBIAN_FRONTEND noninteractive
 
