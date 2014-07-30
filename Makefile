@@ -11,9 +11,6 @@ clean:
 	docker rm db
 
 build-shinken:
-	pip install beautifulsoup4
-	pip install requests
-	cp containers/shinken/scripts/tokens.py.copyme containers/shinken/scripts/tokens.py
 	cd containers/shinken && make conf
 	docker build -t quebecmon containers/shinken
 
@@ -22,6 +19,6 @@ build-influxdb:
 
 run-shinken:
 	docker run -d -t --name shinken --link db:db quebecmon
-	
+
 run-influxdb:
 	docker run -d -v ${PWD}/containers/data:/data/db -t -p 8083:8083 -p 8086:8086 --name db influxdb
