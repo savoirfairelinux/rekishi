@@ -5,6 +5,9 @@ build-all: build-shinken build-influxdb
 run-all: run-shinken run-influxdb
 
 clean:
+	true
+
+kill:
 	docker stop shinken
 	docker stop db
 	docker rm shinken
