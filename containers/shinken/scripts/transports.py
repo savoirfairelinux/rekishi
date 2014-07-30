@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from tokens import TOKENS
-
 TRANSPORTS = {
     'Métro à Montréal': {
         'hostname': 'stm_metro',
@@ -14,11 +12,6 @@ TRANSPORTS = {
         'command': 'check_bixi_montreal!http://montreal.bixi.com/data/bikeStations.xml!1!100',
         'url': 'http://montreal.bixi.com',
     },
-    "AMT: nombre d'alertes": {
-        'hostname': 'amt_trains',
-        'command': 'check_amt_montreal!http://opendata.amt.qc.ca:2539/ServiceGTFSR/Alert.pb!%s!1!30' % TOKENS['AMT'],
-        'url': 'http://amt.qc.ca/train/deux-montagnes.aspx',
-    }
 }
 
 template = (
