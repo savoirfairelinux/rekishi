@@ -8,20 +8,20 @@ clean:
 	true
 
 kill:
-	docker stop shinken
-	docker stop db
-	docker rm shinken
-	docker rm db
+	sudo docker stop shinken
+	sudo docker stop db
+	sudo docker rm shinken
+	sudo docker rm db
 
 build-shinken:
 	cd containers/shinken && make conf
-	docker build -t quebecmon containers/shinken
+	sudo docker build -t quebecmon containers/shinken
 
 build-influxdb:
-	docker build -t influxdb containers/influxdb
+	sudo docker build -t influxdb containers/influxdb
 
 run-shinken:
-	docker run -d -t --name shinken --link db:db quebecmon
+	sudo docker run -d -t --name shinken --link db:db quebecmon
 
 run-influxdb:
-	docker run -d -v ${PWD}/containers/data:/data/db -t -p 8083:8083 -p 8086:8086 --name db influxdb
+	sudo docker run -d -v ${PWD}/containers/data:/data/db -t -p 8083:8083 -p 8086:8086 --name db influxdb
