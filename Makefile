@@ -2,7 +2,7 @@ all: clean build-shinken build-influxdb run-influxdb run-shinken
 
 build-all: build-shinken build-influxdb
 
-run-all: run-shinken run-influxdb
+run-all: run-influxdb run-shinken
 
 clean:
 	true
@@ -24,4 +24,4 @@ run-shinken:
 	sudo docker run -d -t --name shinken --link db:db quebecmon
 
 run-influxdb:
-	sudo docker run -d -v ${PWD}/containers/data:/data/db -t -p 8083:8083 -p 8086:8086 --name db influxdb
+	sudo docker run -d -v ${PWD}/containers/data:/data -t -p 8083:8083 -p 8086:8086 --name db influxdb
