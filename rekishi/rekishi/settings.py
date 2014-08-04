@@ -36,6 +36,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'api',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -83,6 +84,10 @@ STATIC_URL = '/static/'
 
 ## NON-DJANGO CONFIGS
 # Connection info for InfluxDB
-INFLUXDB_URL = 'localhost'
-INFLUXDB_PORT = 8086
+INFLUXDB_HOST = os.getenv('INFLUXDB_HOST', 'localhost')
+INFLUXDB_HOST = os.getenv('INFLUXDB_HOST')
+INFLUXDB_PORT = os.getenv('INFLUXDB_PORT', 8086)
+INFLUXDB_USER = os.getenv('INFLUXDB_USER', 'root')
+INFLUXDB_PASSWORD = os.getenv('INFLUXDB_PASSWORD', 'root')
+INFLUXDB_DB = os.getenv('INFLUXDB_DB', 'database')
 
