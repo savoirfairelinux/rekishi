@@ -15,7 +15,10 @@ def bypass(request):
     data = influxdb_dataset(data)
     ret_value = json.dumps([series.to_dygraph() for series in data], indent=2)
 
-    response = HttpResponse(ret_value)
-    response['Content-Type'] = "application/json"
+    # response = HttpResponse(ret_value)
+    # response['Content-Type'] = "application/json"
 
-    return response
+    return render(request, 'basicgraph.html', {
+        'data': ret_value,
+        'query': query
+    })

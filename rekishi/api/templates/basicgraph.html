@@ -1,0 +1,32 @@
+{% load staticfiles %}
+<head>
+    <title>Basic Dygraph</title>
+    <script src="{% static "js/dygraph-combined.js" %}"></script>
+</head>
+<h1>Basic graph from query data</h1>
+
+<h3>Your query was:</h3>
+<p>{{ query }}</p>
+<h3>Labels</h3>
+<p id=para-labels></p>
+<h3>Points</h3>
+<p id=para-points></p>
+
+<div id="graph-div"></div>
+
+<p>{{data}}</p>
+
+<script>
+    var data = {{ data|safe }};
+    var graphData = data[0].data;
+    var labels = data[0].labels;
+
+    document.getElementById("para-labels").innerHTML = labels;
+    document.getElementById("para-points").innerHTML = graphData;
+
+    new Dygraph(document.getElementById("graph-div"), graphData, 
+    { 
+        labels: labels,
+    });
+</script>
+
