@@ -12,7 +12,11 @@
 <h3>Points</h3>
 <p id=para-points></p>
 
-<div id="graph-div"></div>
+<div id="graph-div" style="width:100%"></div>
+
+<br/>
+<br/>
+<br/>
 
 <p>{{data}}</p>
 
@@ -23,10 +27,33 @@
 
     document.getElementById("para-labels").innerHTML = labels;
     document.getElementById("para-points").innerHTML = graphData;
+    function parseTimestamp(x){
+        d = new Date(parseInt(x) * 1000);
+        monthHack = Dygraph.zeropad(d.getMonth() + 1);
+        //return d;
+        return d.getFullYear() + "/" +
+            monthHack + "/" +
+            Dygraph.zeropad(d.getDate()) + " " +
+            Dygraph.zeropad(d.getHours()) + ":" +
+            Dygraph.zeropad(d.getMinutes()) + ":" +
+            Dygraph.zeropad(d.getSeconds());
+    };
 
     new Dygraph(document.getElementById("graph-div"), graphData, 
     { 
         labels: labels,
+        xAxisLabelWidth: 100,
+        legend: 'always',
+        labelsDivStyles: { 'textAlign': 'left' },
+        showRangeSelector: true,
+        rangeSelectorHeight: 50,
+        axes: {
+            x: {
+                valueFormatter: parseTimestamp,
+                valueParser: parseTimestamp,
+                axisLabelFormatter: parseTimestamp,
+            }
+        }
     });
 </script>
 

@@ -12,8 +12,9 @@ class influxdb_series(dict):
         series['labels'] = self.get('columns')
         series['data'] = self.get('points')
 
-        series = self._strip_sequence_numbers(series)
-        series = self._convert_timestamps(series)
+        if "sequence_number" in series['labels']:
+            series = self._strip_sequence_numbers(series)
+        # series = self._convert_timestamps(series)
         return series
 
     def to_csv(self):
@@ -30,7 +31,6 @@ class influxdb_series(dict):
 
     def _convert_timestamps(self, series):
         timestamp_idx = series['labels'].index('time')
-        new_data = []
         for point in series['data']:
             point[timestamp_idx] = datetime.datetime.fromtimestamp(
                 int(point[timestamp_idx])
