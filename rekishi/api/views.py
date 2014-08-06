@@ -18,7 +18,7 @@ def bypass(request):
     # response = HttpResponse(ret_value)
     # response['Content-Type'] = "application/json"
 
-    return render(request, 'basicgraph.html', {
+    return render(request, 'api/basicgraph.html', {
         'data': ret_value,
         'query': query
     })

@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'api',
+    'builder',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -76,6 +77,10 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Template dirs
+TEMPLATE_DIRS = (
+   str(os.path.join(BASE_DIR, 'templates/')),
+)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/

@@ -1,8 +1,12 @@
+{% extends "base.html" %}
 {% load staticfiles %}
-<head>
-    <title>Basic Dygraph</title>
+
+{% block title %}Basic Dygraph{% endblock %}
+
+{% block header %}
     <script src="{% static "js/dygraph-combined.js" %}"></script>
-</head>
+{% endblock %}
+{% block content %}
 <h1>Basic graph from query data</h1>
 
 <h3>Your query was:</h3>
@@ -45,8 +49,6 @@
         xAxisLabelWidth: 100,
         legend: 'always',
         labelsDivStyles: { 'textAlign': 'left' },
-        showRangeSelector: true,
-        rangeSelectorHeight: 50,
         axes: {
             x: {
                 valueFormatter: parseTimestamp,
@@ -56,4 +58,6 @@
         }
     });
 </script>
+
+{% endblock %}
 
