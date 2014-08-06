@@ -11,6 +11,7 @@ class influxdb_series(dict):
         series = {}
         series['labels'] = self.get('columns')
         series['data'] = self.get('points')
+        series['data'].reverse()
 
         if "sequence_number" in series['labels']:
             series = self._strip_sequence_numbers(series)
@@ -24,7 +25,6 @@ class influxdb_series(dict):
         seq_num_idx = series['labels'].index('sequence_number')
         series['labels'].remove('sequence_number')
         for point in series['data']:
-            new_point = []
             point.pop(seq_num_idx)
 
         return series
