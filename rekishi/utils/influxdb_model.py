@@ -9,6 +9,7 @@ class influxdb_dataset(list):
 class influxdb_series(dict):
     def to_dygraph(self):
         series = {}
+        series['name'] = self.get('name')
         series['labels'] = self.get('columns')
         series['data'] = self.get('points')
         series['data'].reverse()

@@ -38,22 +38,37 @@ def simple_series(request, host=None, service=None, series=None):
     #     'query': query
     # })
 
-def host_services(request, host=None):
+def host_series(request, host=None):
 
     try:
-        query = 'SELECT * from /%s\..*/ limit 1;' % host
+        query = 'SELECT * from /%s\.%s.*/;' % (host, "_self_")
 
         data = db.query(query)
-        services = []
-        for service in data:
-            services.append(service['name'])
-        # data = influxdb_dataset(data)
+        print query
+        print data
+        data = influxdb_dataset(data)
+        ret_value = json.dumps([series.to_dygraph() for series in data], indent=2)
 
-        ret_value = json.dumps(services, indent=2)
+        return HttpResponse(ret_value, content_type="application/json")
+
     except:
         raise Http404
 
     return HttpResponse(ret_value, content_type="application/json")
 
 def service_series(request, host=None, service=None):
-    pass
+
+    try:
+        query = 'SELECT * from /%s\.%s.*/;' % (host, service)
+
+        data = db.query(query)
+        data = influxdb_dataset(data)
+        print json.dumps(data, indent=2)
+        ret_value = json.dumps([series.to_dygraph() for series in data], indent=2)
+
+        return HttpResponse(ret_value, content_type="application/json")
+
+    except:
+        raise Http404
+
+    return HttpResponse(ret_value, content_type="application/json")
