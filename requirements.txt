@@ -1,3 +1,4 @@
 Django==1.6.1
 beautifulsoup4
 requests
+influxdb

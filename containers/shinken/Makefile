@@ -7,7 +7,7 @@ run:
 conf: banks transports environment
 
 banks:
-	scripts/banks.py > etc/shinken/adagios/banks.cfg
+	# scripts/banks.py > etc/shinken/adagios/banks.cfg
 
 transports:
 	scripts/transports.py > etc/shinken/adagios/transports.cfg

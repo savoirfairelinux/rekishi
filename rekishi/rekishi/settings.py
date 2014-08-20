@@ -36,6 +36,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'api',
+    'builder',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -75,8 +77,22 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Template dirs
+TEMPLATE_DIRS = (
+   str(os.path.join(BASE_DIR, 'templates/')),
+)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+
+## NON-DJANGO CONFIGS
+# Connection info for InfluxDB
+INFLUXDB_HOST = os.getenv('INFLUXDB_HOST', 'localhost')
+INFLUXDB_HOST = os.getenv('INFLUXDB_HOST')
+INFLUXDB_PORT = os.getenv('INFLUXDB_PORT', 8086)
+INFLUXDB_USER = os.getenv('INFLUXDB_USER', 'root')
+INFLUXDB_PASSWORD = os.getenv('INFLUXDB_PASSWORD', 'root')
+INFLUXDB_DB = os.getenv('INFLUXDB_DB', 'database')
+
