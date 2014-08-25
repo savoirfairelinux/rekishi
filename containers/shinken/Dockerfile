@@ -11,7 +11,7 @@ RUN apt-get update
 
 ### Utils
 
-RUN apt-get install -y git python-pip emacs curl vim
+RUN apt-get install -y git python-pip emacs curl vim python-simplejson gettext coffeescript
 
 ### Other .deb sources
 
@@ -32,15 +32,16 @@ RUN apt-get install -y python-protobuf # required by check_amt
 
 ### SSH
 
-run apt-get install -y openssh-server
+RUN apt-get install -y openssh-server
+ADD id_rsa.pub /root/.ssh/authorized_keys
 
 ### Supervisor
 
 RUN apt-get -y install supervisor
 
-### Configuration
+## Configuration
 
-## Shinken
+### Shinken
 
 RUN apt-get install -y python-pycurl
 RUN pip install influxdb
@@ -54,6 +55,7 @@ RUN shinken install booster-nrpe
 RUN shinken install logstore-sqlite
 RUN rm /etc/shinken/modules/influxdb.cfg
 RUN rm /etc/shinken/brokers/broker-master.cfg
+RUN cd /var/lib/shinken/modules/livestatus && rm mapping.py && wget https://raw.githubusercontent.com/shinken-monitoring/mod-livestatus/03b26a29439d00737d1dd8d98572f42a6e707287/module/mapping.py
 
 ### Plugins
 
@@ -68,9 +70,16 @@ RUN chmod u+s /usr/lib/nagios/plugins/check_icmp
 RUN chmod u+s /bin/ping
 RUN chmod u+s /bin/ping6
 
+## Adagios
+# We need an old version of Django for Adagios
+RUN pip install django\<1.7 python-geoip python-geoip-geolite2
+RUN ln -s /usr/bin/django-admin /usr/bin/django-admin.py
+RUN pip install git+git://github.com/pynag/pynag.git
+
 ADD etc /etc
 RUN chown -R shinken: /etc/shinken
 
 EXPOSE 22
+EXPOSE 8000
 
 CMD ["/usr/bin/supervisord"]
