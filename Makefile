@@ -30,7 +30,7 @@ run-shinken:
 		sudo docker run -d -t --name shinken --link db:db quebecmon; \
 		echo "sudo docker run -d -t --name shinken --link db:db quebecmon"; \
 	else \
-	sudo docker run -d -t --name shinken --link db:db -p 8000:8000 --volume=$(ADAGIOS_PATH):/opt/adagios quebecmon; \
+	sudo docker run -d -t --name shinken --link db:db -p 8002:8000 --volume=$(ADAGIOS_PATH):/opt/adagios quebecmon; \
 		echo "sudo docker run -d -t --name shinken --link db:db --volume=$(ADAGIOS_PATH):/opt/adagios quebecmon"; \
 	fi
 
@@ -38,4 +38,4 @@ run-influxdb:
 	sudo docker run -d -v ${PWD}/containers/data:/data -t -p 8083:8083 -p 8086:8086 --name db influxdb
 
 run-rekishi:
-	sudo docker run -d -v ${PWD}:/opt/rekishi -t -p 8000:8001 --name rekishi --link db:db rekishi
+	sudo docker run -d -v ${PWD}:/opt/rekishi -t -p 8001:8000 --name rekishi --link db:db rekishi

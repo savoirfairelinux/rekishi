@@ -22,6 +22,7 @@ RUN apt-get -y install supervisor
 
 ### Django
 RUN pip install django\<1.7
+RUN pip install influxdb
 RUN ln -s /usr/bin/django-admin /usr/bin/django-admin.py
 
 ### Copy configs
