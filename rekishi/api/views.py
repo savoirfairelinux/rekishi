@@ -7,9 +7,6 @@ from query_builder import InfluxQueryHelper
 
 import json
 
-def index(request):
-    return HttpResponse("Check /api/bypass?q=QUERYHERE")
-
 def bypass(request):
     query = request.GET.get('q', '')
 

@@ -3,7 +3,6 @@ from django.conf.urls import patterns, url
 from api import views
 
 urlpatterns = patterns('', 
-    # url(r'^$', views.index, name='index'),
     # url(r'^bypass/', views.bypass, name='bypass'),
     url(r'^dg/(?P<host>[A-Za-z0-9._]+)/$',
             views.dg_host_series, name='dg_host_series'),
