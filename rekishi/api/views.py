@@ -29,6 +29,9 @@ def bypass(request):
 def dg_single_series(request, host=None, service=None, series=None):
     
     try: 
+        host = host.replace('.', '_')
+        service = service.replace('.', '_')
+        series = series.replace('.', '_')
         series = '.'.join([host, service, series])
         base = 'SELECT * FROM %s' % series
 
@@ -54,6 +57,7 @@ def dg_host_series(request, host=None):
 
     try:
         
+        host = host.replace('.', '_')
         base = "SELECT * FROM /%s\.%s\..*/" % (host, "_self_")
         base = "SELECT * FROM /%s\..*/" % host
 
@@ -78,6 +82,8 @@ def dg_host_series(request, host=None):
 def dg_service_series(request, host=None, service=None):
 
     try:
+        host = host.replace('.', '_')
+        service = service.replace('.', '_')
         base = 'SELECT * FROM /%s\.%s\.%s\..*/' % (host, service, "_self_")
 
         query_helper = InfluxQueryHelper()

@@ -23,9 +23,9 @@ ADD etc /etc
 # uncomment the following block to enable ssh access.
 # You will need to place your public key in the container's directory alongside this Dockerfile
 # You will also need to uncomment the sshd section in supervisor's config
-# RUN apt-get install -y openssh-server
-# ADD id_rsa.pub /root/.ssh/authorized_keys
-# EXPOSE 22
+RUN apt-get install -y openssh-server
+ADD id_rsa.pub /root/.ssh/authorized_keys
+EXPOSE 22
 
 # Admin server
 EXPOSE 8083

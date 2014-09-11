@@ -32,4 +32,6 @@ ADD etc /etc
 EXPOSE 22
 EXPOSE 8000
 
+ENV INFLUXDB_HOST db
+
 CMD ["/usr/bin/supervisord"]
