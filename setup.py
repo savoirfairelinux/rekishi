@@ -3,7 +3,7 @@ import os
 from setuptools import setup
 from distutils.command.build import build
 from distutils.sysconfig import get_python_lib
-#from rekishi import __version__
+from rekishi import __version__
 
 
 def get_filelist(path):
@@ -30,7 +30,15 @@ data_files = map(lambda x: x.replace('rekishi/', '', 1), template_files)
 print data_files
 
 app_name = 'rekishi'
-version = '0.1'
+version = __version__
+
+
+class rekishi_build(build):
+    def run(self):
+        # Normal build:
+        build.run(self)
+
+        
 
 setup(name=app_name,
     version=version,
@@ -41,5 +49,5 @@ setup(name=app_name,
     packages=['rekishi'],
     package_data={'rekishi': data_files},
     requires=['django', 'pynag'],
-#    cmdclass=dict(build=rekishi_build),
+    cmdclass=dict(build=rekishi_build),
 )

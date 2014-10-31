@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from . import db
-from . import influxdb_dataset, influxdb_series
-from forms import QueryForm
+from rekishi.builder import db
+from rekishi.builder import influxdb_dataset, influxdb_series
+from rekishi.builder.forms import QueryForm
 
 import json
 

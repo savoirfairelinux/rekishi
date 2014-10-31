@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
-from . import db
-from . import influxdb_dataset, influxdb_series
-from response_builder import dygraph_response
-from query_builder import InfluxQueryHelper
+from rekishi.api import db
+from rekishi.api import influxdb_dataset, influxdb_series
+from rekishi.api.response_builder import dygraph_response
+from rekishi.api.query_builder import InfluxQueryHelper
 
 import json
 

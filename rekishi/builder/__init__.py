@@ -1,5 +1,5 @@
 from influxdb import client as influxdb
-from utils.influxdb_model import *
+from rekishi.utils.influxdb_model import *
 
 from rekishi import settings
 
