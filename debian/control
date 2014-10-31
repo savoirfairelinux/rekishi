@@ -1,0 +1,13 @@
+Source: rekishi
+Maintainer: Thibault Cohen <thibault.cohen@savoirfairelinux.com>
+Section: python
+Priority: optional
+Build-Depends: python (>= 2.6.6-3~), debhelper (>= 7.4.3)
+Standards-Version: 3.9.6
+Homepage: https://github.com/savoirfairelinux/rekishi
+
+X-Python-Version: >= 2.4
+Package: rekishi
+Architecture: all
+Depends: ${misc:Depends}, ${python:Depends}, python-django, python-influxdb
+Description: Django application to render reports from Shinken data stored in InfluxDB
