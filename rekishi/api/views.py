@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
-from . import db
-from . import influxdb_dataset, influxdb_series
-from response_builder import dygraph_response
-from query_builder import InfluxQueryHelper
+from rekishi.api import db
+from rekishi.api import influxdb_dataset, influxdb_series
+from rekishi.api.response_builder import dygraph_response
+from rekishi.api.query_builder import InfluxQueryHelper
 
 import json
 
@@ -42,6 +42,9 @@ def dg_single_series(request, host=None, service=None, series=None):
         if request.GET.get('events', 'false').lower() != 'true':
             data = [series for series in data if series.get('name',
                     '').find('._events_.') < 0]
+        else:
+            data = [series for series in data if series.get('name', 
+                    '').find('._events_.') >= 0]
 
         return data
 
@@ -66,8 +69,11 @@ def dg_host_series(request, host=None):
 
         # Handle the removal of events series if not queried for
         if request.GET.get('events', 'false').lower() != 'true':
-            data = [series for series in data if series.get('name',
+            data = [series for series in data if series.get('name', 
                     '').find('._events_.') < 0]
+        else:
+            data = [series for series in data if series.get('name', 
+                    '').find('._events_.') >= 0]
 
         return data
 
@@ -81,7 +87,7 @@ def dg_service_series(request, host=None, service=None):
     try:
         host = host.replace('.', '_')
         service = service.replace('.', '_')
-        base = 'SELECT * FROM /%s\.%s\.%s\..*/' % (host, service, "_self_")
+        base = 'SELECT * FROM /%s\.%s\.%s\..*/' % (host, service, "_events_")
 
         query_helper = InfluxQueryHelper()
         query = query_helper.build_query(base, **request.GET)
@@ -93,6 +99,9 @@ def dg_service_series(request, host=None, service=None):
         if request.GET.get('events', 'false').lower() != 'true':
             data = [series for series in data if series.get('name',
                     '').find('._events_.') < 0]
+        else:
+            data = [series for series in data if series.get('name',
+                    '').find('._events_.') >= 0]
 
         return data
 

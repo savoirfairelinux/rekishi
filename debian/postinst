@@ -1,0 +1,2 @@
+chown -R www-data:www-data /etc/rekishi/
+service apache2 reload || echo "Failed to reload apache. You have to reload apache to update its configuration"

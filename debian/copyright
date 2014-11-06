@@ -1,0 +1,11 @@
+Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: rekishi
+Upstream-Contact: Philippe Pépos Petitclerc <ppeposp@gmail.com>
+Source: https://github.com/savoirfairelinux/rekishi 
+
+Files: *
+Copyright: 2014 Philippe Pépos Petitclerc
+           2014 Thibault Cohen
+License: GPL-3
+ On Debian systems, the complete text of the GNU Afferoa General
+ Public License version 3 can be found in "/usr/share/common-licenses/GPL-3".
