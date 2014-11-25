@@ -1,10 +1,13 @@
 #!/usr/bin/env python
+
 import os
+from os.path import normpath, dirname, abspath
 import sys
 
 if __name__ == "__main__":
     # Insert PYTHONPATH relative to manage.py
-    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)) + "/..")
+    parent_dir = normpath(dirname(dirname(abspath(__file__))))
+    sys.path.append(parent_dir)
 
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "rekishi.settings")
 
