@@ -1,50 +1,51 @@
-from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
-from rekishi.builder import db
-from rekishi.builder import influxdb_dataset, influxdb_series
-from rekishi.builder.forms import QueryForm
 
 import json
 
-def index(request):
-    if request.method == 'GET':
-        form = QueryForm()
-        return render(request, 'builder/index.html', {
-            'form': form,
-        })
-        # Render Form
-    elif request.method == 'POST':
-        form = QueryForm(request.POST)
-        if form.is_valid():
-            print form.cleaned_data
-            
-            query = 'SELECT %s FROM %s.%s.%s;' % (
-                    form.cleaned_data['field'],
-                    form.cleaned_data['host'], 
-                    form.cleaned_data['service'], 
-                    form.cleaned_data['series']
-                )
-            data = db.query(query)
-            data = influxdb_dataset(data)
-            ret_value = json.dumps([series.to_dygraph() for series in data], indent=2)
+from django.shortcuts import render
+from django.http import HttpResponse, HttpResponseRedirect
+from rekishi.api.response_builder import jsonify_series
 
-            return render(request, 'api/basicgraph.html', {
-                'data': ret_value,
-                'query': query
-            })
-        # Return Redirect to graph
+from rekishi.builder.forms import QueryForm
+
+from rekishi.utils.influx import query_influx_2
+
+
+def index(request):
+
+    if request.method == 'POST':
+        args = (request.POST,)
+    else:
+        args = ()
+
+    form = QueryForm(*args)
+
+    if form.is_valid():
+        print form.cleaned_data
+
+        query = 'SELECT %s FROM %s.%s.%s;' % (
+                form.cleaned_data['field'],
+                form.cleaned_data['host'],
+                form.cleaned_data['service'],
+                form.cleaned_data['series']
+            )
+
+
+        json_data = jsonify_series(query_influx_2(query, {}))
+
+        return render(request, 'api/basicgraph.html', {
+            'data': json_data,
+            'query': query
+        })
+
+    return render(request, 'builder/index.html', { 'form': form })
+
 
 def bypass(request):
     query = request.GET.get('q', '')
 
-    data = db.query(query)
-    data = influxdb_dataset(data)
-    ret_value = json.dumps([series.to_dygraph() for series in data], indent=2)
-
-    # response = HttpResponse(ret_value)
-    # response['Content-Type'] = "application/json"
+    json_data = jsonify_series(query_influx_2(query, {}))
 
     return render(request, 'basicgraph.html', {
-        'data': ret_value,
+        'data': json_data,
         'query': query
     })

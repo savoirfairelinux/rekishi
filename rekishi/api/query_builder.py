@@ -1,3 +1,5 @@
+
+
 class InfluxQueryHelper(object):
 
     def __init__(self):
@@ -9,16 +11,22 @@ class InfluxQueryHelper(object):
 
         where_clause_dict = {}
         if 'start' in kwargs:
-            where_clause_dict['start'] = kwargs['start'].pop()
+            start = kwargs['start']
+            if isinstance(start, (int, float)):
+                start = '%ss' % int(start)
+            where_clause_dict['start'] = start
         if 'end' in kwargs:
-            where_clause_dict['end'] = kwargs['end'].pop()
+            end = kwargs['end']
+            if isinstance(end, (int, float)):
+                end = '%ss' % int(end)
+            where_clause_dict['end'] = end
         if 'where' in kwargs:
-            where_clause_dict['where'] = kwargs['where'].pop()
+            where_clause_dict['where'] = kwargs['where']
         if len(where_clause_dict) > 0:
             self.where_clause = self.build_where_clause(where_clause_dict)
 
         if 'limit' in kwargs:
-            self.limit_clause = self.build_limit_clause(kwargs['limit'][0])
+            self.limit_clause = self.build_limit_clause(kwargs['limit'])
 
         # SELECT * FROM SERIE_NAME WHERE TIME=XX LIMIT 1;
         self.query = "%s%s%s;" % (base_query, self.where_clause, self.limit_clause)
