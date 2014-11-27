@@ -130,7 +130,7 @@ def query_influx(base_kw, query_kw, what='*', get_events=False):
 
      # if there are some '\' in the base we must escape them !
         # remember the FROM is a regex here..
-    query = "SELECT %s FROM /^%s$/" % (what, base.replace('\\', r'\\'))
+    query = "SELECT %s FROM /^%s$/" % (what, base.replace('/', r'\/'))
     # or more simply (as we do exact search) :
     # but we still have to escape double quote ofcourse..
     #query = 'SELECT %s FROM "%s"' % (what, base.replace('"', r'\"'))
